@@ -8,6 +8,26 @@
         </ul>
     </body>
     <script>
-        // 이곳에 코드를 구현하십시오.
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/v1/data/list', {
+                method: 'POST', // POST 메서드로 변경
+                headers: {
+                    'Content-Type': 'application/json' // JSON 컨텐츠 타입 헤더 추가
+                },
+                body: JSON.stringify({}) // 빈 바디 전송
+            })
+                .then(response => response.json())
+                .then(dataList => {
+                    const dataListElement = document.getElementById('dataList');
+
+                    dataList.forEach(data => {
+                        let listItem = document.createElement('li');
+                        listItem.textContent = data.text; // data.text는 서버에서 반환된 객체의 텍스트 필드
+                        dataListElement.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
     </script>
+
 </html>
